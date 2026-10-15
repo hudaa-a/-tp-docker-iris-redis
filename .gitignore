@@ -18,7 +18,8 @@ secrets.json
 *.joblib
 *.pkl
 
-# LaTeX build files. The PDF itself is kept.
+# LaTeX source and build files. The PDF itself is kept.
+rapport.tex
 *.aux
 *.log
 *.out
