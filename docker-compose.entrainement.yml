@@ -1,0 +1,21 @@
+# L'entrainement ecrit le modele dans le volume, puis l'inference le charge.
+# infer attend que train se soit termine avec succes.
+
+services:
+  train:
+    build: ./train
+    image: iris-train:opt
+    volumes:
+      - iris-models:/model
+
+  infer:
+    build: ./infer
+    image: iris-infer:opt
+    depends_on:
+      train:
+        condition: service_completed_successfully
+    volumes:
+      - iris-models:/model
+
+volumes:
+  iris-models:

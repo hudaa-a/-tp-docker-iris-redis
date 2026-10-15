@@ -1,0 +1,27 @@
+# TP 4 : l'API predit, Redis (service "base") compte les predictions.
+# Le compteur est dans le volume redis-data : il survit a "down", pas a "down -v".
+
+services:
+  api:
+    build: ./infer
+    image: iris-api:tp4
+    ports:
+      - "8000:8000"
+    environment:
+      REDIS_HOST: base
+      MODEL_PATH: /model/iris_model.joblib
+    volumes:
+      - iris-models:/model
+    depends_on:
+      - base
+
+  base:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+
+volumes:
+  iris-models:
+    external: true
+    name: exercice-docker_iris-models
+  redis-data:
